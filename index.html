@@ -227,3 +227,38 @@
   </p>
 </body>
 </html>
+
+<h2>18 марта, 2026</h2>
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error
+import numpy as np
+import pandas as pd
+
+# Пример данных
+X = np.array([[14], [5], [2], [15], [8], [12], [20], [18], [9], [25]])
+Y = np.array([17, 21, 28, 95, 45, 67, 88, 82, 52, 105])
+
+# Разделение на train/test
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_state=42)
+
+# Обучение модели
+regressor = LinearRegression()
+regressor.fit(X_train, Y_train)
+
+# Прогноз
+y_pred = regressor.predict(X_test)
+
+# Считаем метрики
+mae = mean_absolute_error(Y_test, y_pred)
+
+print(f"MAE (средняя абсолютная ошибка): {mae:.4f}")
+print("=" * 50)
+
+# Простая интерпретация
+print(f"\n📝 Что это значит:")
+print(f"• В среднем модель ошибается на {mae:.2f} балла (MAE)")
+
+# Пример: баллы от 0 до 100
+print(f"Диапазон баллов: {Y_test.max() - Y_test.min()}")
+print(f"Относительная ошибка: {mae / (Y_test.max() - Y_test.min()) * 100:.1f}%")
